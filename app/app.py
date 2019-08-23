@@ -8,6 +8,8 @@ import pkgutil
 import numpy as np
 import pandas as pd
 
+from errno import ENOENT
+
 from utils import save_df, typecast_ints, typecast_floats, \
   typecast_objects, save_dtypes, cache_dtypes
 
@@ -92,29 +94,37 @@ def process_df(df, plugins, verbose=True):
   return df
 
 
-def load_single(name, usecols, parse_dates, plugins):
+def load_single(name, sep, usecols, parse_dates, plugins):
   filepath = os.path.join(data_path, name)
+
+  if not os.path.exists(filepath):
+    raise IOError(ENOENT, 'File not found', filepath)
+
   print('Loading data file -> {}'.format(filepath))
 
-  df = pd.read_csv(filepath, sep=';', usecols=usecols, 
+  df = pd.read_csv(filepath, sep=sep, usecols=usecols, 
                     parse_dates=parse_dates, quoting=3)
   
   return process_df(df, plugins)
 
 
-def load_multiple(name, usecols, parse_dates, chunksize, plugins):
+def load_multiple(name, sep, usecols, parse_dates, chunksize, plugins):
   chunk_list = []  # append each chunk df here
   filepath = os.path.join(data_path, name)
-  df_chunk = pd.read_csv(filepath, sep=';', usecols=usecols,
+
+  if not os.path.exists(filepath):
+    raise IOError(ENOENT, 'File not found', filepath)
+
+  df_chunk = pd.read_csv(filepath, sep=sep, usecols=usecols,
                           parse_dates=parse_dates, chunksize=chunksize, quoting=3)
   step = 1
-  sep = '==========================================='
+  hr = '==========================================='
 
   print('Loading data file in chunks -> {}'.format(filepath))
 
   # Each chunk is in df format
   for chunk in df_chunk:
-    print('Performing chunk step[{}] {}'.format(step, sep))
+    print('Performing chunk step[{}] {}'.format(step, hr))
 
     # perform data filtering
     chunk_filter = process_df(chunk, plugins)
@@ -133,6 +143,7 @@ def load_multiple(name, usecols, parse_dates, chunksize, plugins):
 
 def convert_df(params):
   df = None
+  sep = ';'
   usecols = None
   plugins = None
   chunksize = None
@@ -140,6 +151,8 @@ def convert_df(params):
 
   print('Parsed arguments: {}'.format(params))
 
+  if 'sep' in params:
+    sep = params['sep']
   if 'usecols' in params:
     usecols = params['usecols']
   if 'chunksize' in params:
@@ -150,9 +163,9 @@ def convert_df(params):
     plugins = params['plugins']
 
   if chunksize is None:
-    df = load_single(params['name'], usecols, parse_dates, plugins)
+    df = load_single(params['name'], sep, usecols, parse_dates, plugins)
   else:
-    df = load_multiple(params['name'], usecols, parse_dates, chunksize, plugins)
+    df = load_multiple(params['name'], sep, usecols, parse_dates, chunksize, plugins)
 
   # Call after plugins
   df = load_tasks(df, plugins, 'after')

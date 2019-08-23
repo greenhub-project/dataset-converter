@@ -1,5 +1,6 @@
 ---
-name: samples.csv
+name: "samples.csv"
+sep: ";"
 chunksize: 100000
 usecols:
   - device_id

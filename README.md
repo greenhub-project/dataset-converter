@@ -56,6 +56,12 @@ Type: `string`
 
 Table filename. This argument is required.
 
+#### sep
+
+Type: `string`
+
+Delimiter character to use. This argument is optional.
+
 #### chunksize
 
 Type: `number`

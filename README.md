@@ -21,7 +21,7 @@
 ## Usage
 
 - Download the .csv files to the `./data` folder
-- Create the necessary config files. See [Configuration](##Configuration) for more details.
+- Create the necessary config files. See [Configuration](#configuration) for more details.
 - Run the application:
 ```shell
 $ docker-compose up

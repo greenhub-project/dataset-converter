@@ -39,11 +39,11 @@ def downcast_df(df):
 
   # transform optimized types
   if converted_int is not None:
-    df[converted_int.columns] = converted_int
+    df.loc[:, converted_int.columns] = converted_int
   if converted_float is not None:
-    df[converted_float.columns] = converted_float
+    df.loc[:, converted_float.columns] = converted_float
   if converted_obj is not None:
-    df[converted_obj.columns] = converted_obj
+    df.loc[:, converted_obj.columns] = converted_obj
 
   return df
 

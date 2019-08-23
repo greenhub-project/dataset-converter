@@ -29,17 +29,21 @@ def downcast_df(df):
   # convert object columns to lowercase
   print('Converting object columns to categories when possible')
   df_obj = df.select_dtypes(include=['object'])
-  df_obj = df_obj.apply(lambda x: x.str.strip())
-  df_obj = df_obj.apply(lambda x: x.str.lower())
+  if df_obj is not None:
+    df_obj = df_obj.apply(lambda x: x.str.strip())
+    df_obj = df_obj.apply(lambda x: x.str.lower())
 
   # convert object to category columns
   # when unique values < 50% of total
   converted_obj = typecast_objects(df_obj)
 
   # transform optimized types
-  df[converted_int.columns] = converted_int
-  df[converted_float.columns] = converted_float
-  df[converted_obj.columns] = converted_obj
+  if converted_int is not None:
+    df[converted_int.columns] = converted_int
+  if converted_float is not None:
+    df[converted_float.columns] = converted_float
+  if converted_obj is not None:
+    df[converted_obj.columns] = converted_obj
 
   return df
 
@@ -61,8 +65,8 @@ def load_tasks(df, plugins, category):
         if task in tasks:
           print('Executing [{}] plugin'.format(task))
           df = tasks[task].apply(df)
-    
-    return df
+
+  return df
 
 
 def export_files(df, name):

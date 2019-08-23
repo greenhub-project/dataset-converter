@@ -5,14 +5,21 @@ import pyarrow.parquet as pq
 
 
 def typecast_ints(gl_int):
-  return gl_int.apply(pd.to_numeric, downcast='unsigned')
+  if gl_int is not None:
+    return gl_int.apply(pd.to_numeric, downcast='unsigned')
+  return None
 
 
 def typecast_floats(gl_float):
-  return gl_float.apply(pd.to_numeric, downcast='float')
+  if gl_float is not None:
+    return gl_float.apply(pd.to_numeric, downcast='float')
+  return None
 
 
 def typecast_objects(gl_obj):
+  if gl_obj is None:
+    return None
+
   # convert object to category columns
   # when unique values < 50% of total
   converted_obj = pd.DataFrame()

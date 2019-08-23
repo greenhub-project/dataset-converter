@@ -6,6 +6,7 @@
 FROM python:3.6-slim
 
 LABEL Name=dataset-converter Version=0.0.1
+LABEL maintainer="Hugo Matalonga <dev@hmatalonga.com>"
 
 ARG UID=1000
 ARG GID=1000

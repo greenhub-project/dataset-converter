@@ -77,6 +77,7 @@ def export_files(df, name):
 
 def process_df(df, plugins, verbose=True):
   if verbose:
+    print('Memory usage before:')
     df.info(memory_usage='deep')
 
   # Call before plugins
@@ -96,7 +97,7 @@ def load_single(name, usecols, parse_dates, plugins):
   print('Loading data file -> {}'.format(filepath))
 
   df = pd.read_csv(filepath, sep=';', usecols=usecols, 
-                    parse_dates=parse_dates, low_memory=False, quoting=3)
+                    parse_dates=parse_dates, quoting=3)
   
   return process_df(df, plugins)
 
@@ -104,8 +105,8 @@ def load_single(name, usecols, parse_dates, plugins):
 def load_multiple(name, usecols, parse_dates, chunksize, plugins):
   chunk_list = []  # append each chunk df here
   filepath = os.path.join(data_path, name)
-  df_chunk = pd.read_csv(filepath, sep=';', usecols=usecols, parse_dates=parse_dates,
-                          chunksize=chunksize, low_memory=False, quoting=3)
+  df_chunk = pd.read_csv(filepath, sep=';', usecols=usecols,
+                          parse_dates=parse_dates, chunksize=chunksize, quoting=3)
   step = 1
   sep = '==========================================='
 

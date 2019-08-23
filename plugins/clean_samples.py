@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+
 def apply(df):
   # sorting
   df = df.sort_values(by=['device_id', 'timestamp'])

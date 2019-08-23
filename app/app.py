@@ -62,7 +62,7 @@ def load_tasks(df, plugins, category):
         if name in plugins[category]
       }
       for task in plugins[category]:
-        if task in tasks:
+        if task in tasks and hasattr(tasks[task], 'apply'):
           print('Executing [{}] plugin'.format(task))
           df = tasks[task].apply(df)
 
@@ -185,6 +185,8 @@ def main():
       with open(config) as f:
         print('Loading config file -> {}'.format(config))
         convert_df(yaml.load(f, Loader=yaml.FullLoader))
+    
+    print('Done!')
   except Exception as e:
     print(e)
 

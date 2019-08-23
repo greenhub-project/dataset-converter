@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  dataset-converter:
+    image: dataset-converter
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - UID=${UID}
+        - GID=${GID}
+    volumes:
+      - ./data:/home/user/data
+      - ./plugins:/home/user/plugins

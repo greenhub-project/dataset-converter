@@ -1,0 +1,10 @@
+---
+name: example.csv
+cols:
+  - a
+  - b
+  - c
+parse_dates:
+  - c
+plugins:
+  - example

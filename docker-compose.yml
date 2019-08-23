@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  dataset-converter:
+    image: dataset-converter
+    build:
+      context: .
+      args:
+        - UID=${UID}
+        - GID=${GID}
+    volumes:
+      - ./data:/home/user/data
+      - ./plugins:/home/user/plugins

@@ -1,20 +1,28 @@
 ---
 name: "samples.csv"
-sep: ";"
-chunksize: 100000
+chunksize: 1000000
 compression: true
 usecols:
   - device_id
   - timestamp
-  - battery_state
+  - app_version
+  - database_version
   - battery_level
+  - battery_state
+  - memory_active
+  - memory_inactive
+  - memory_free
   - network_status
   - screen_brightness
   - screen_on
+  - timezone
+  - country_code
+  - triggered_by
 parse_dates:
   - timestamp
 plugins:
   before:
+    - dropna
     - date_filtering
   after:
     - clean_samples

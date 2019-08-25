@@ -28,6 +28,15 @@ $ docker-compose up
 ```
 - It will look for all `.yml`, for each dataset configured file, it will produce an optimized parquet file and a pickle file containing the pandas dtypes. The generated files are located in the `./data` folder.
 
+### Output files
+For each config file found, keeps the same file `name` as set in the config and create the following files:
+
+#### ${name}.dytpes.pickle
+Contains a dict python with the column:dtype for each entry.
+
+#### ${name}.parquet.7z
+Creates a parquet binary file compressed in 7z format from the dataframe processed.
+
 ## Plugins
 
 A plugin system is available, where is possible to call additional procedures to modify the dataset files.

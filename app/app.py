@@ -72,7 +72,7 @@ def load_tasks(df, plugins, category):
 def export_files(df, name, compression):
   filename = name.split('.')[0]
 
-  filepath = os.path.join(data_path, filename + '.dtypes.p')
+  filepath = os.path.join(data_path, filename + '.dtypes.pickle')
   print('Creating dtypes file -> {}'.format(filepath))
   save_dtypes(cache_dtypes(df), filepath)
 

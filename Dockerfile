@@ -5,7 +5,7 @@
 # tags from Docker Hub.
 FROM python:3.7-slim
 
-LABEL Name=dataset-converter Version=0.1.0
+LABEL Name=dataset-converter Version=0.1.1
 LABEL maintainer="Hugo Matalonga <dev@hmatalonga.com>"
 
 ARG UID=1000
@@ -21,8 +21,6 @@ RUN addgroup --system --gid ${GID} user \
 WORKDIR /home/user
 COPY ./app/requirements.txt /home/user
 
-# Using pip:
-RUN python3 -m pip install --upgrade --no-cache-dir --compile pip
 RUN python3 -m pip install --no-cache-dir --compile -r requirements.txt
 
 ADD ./entrypoint.sh /usr/local/bin
@@ -34,4 +32,4 @@ RUN chown -R user:user /home/user
 USER user
 ENV PATH=${PATH}:/home/user/.local/bin
 
-CMD ["/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

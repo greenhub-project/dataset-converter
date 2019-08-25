@@ -2,6 +2,7 @@
 name: "samples.csv"
 sep: ";"
 chunksize: 100000
+compression: true
 usecols:
   - device_id
   - timestamp

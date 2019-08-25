@@ -13,3 +13,5 @@ LICENSE
 .vscode
 data/*
 !data/*.yml.example
+*.sh
+!entrypoint.sh

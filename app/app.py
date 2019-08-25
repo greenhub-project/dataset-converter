@@ -11,7 +11,7 @@ import pandas as pd
 from errno import ENOENT
 
 from utils import save_df, typecast_ints, typecast_floats, \
-  typecast_objects, save_dtypes, cache_dtypes
+  typecast_objects, save_dtypes, cache_dtypes, compress_df
 
 
 data_path = os.path.abspath('./data')
@@ -58,7 +58,7 @@ def load_tasks(df, plugins, category):
       tasks = {
         name: importlib.import_module(name)
         for finder, name, ispkg
-        in pkgutil.iter_modules('.')
+        in pkgutil.iter_modules(['.'])
         if name in plugins[category]
       }
       for task in plugins[category]:
@@ -69,7 +69,7 @@ def load_tasks(df, plugins, category):
   return df
 
 
-def export_files(df, name):
+def export_files(df, name, compression):
   filename = name.split('.')[0]
 
   filepath = os.path.join(data_path, filename + '.dtypes.p')
@@ -79,6 +79,10 @@ def export_files(df, name):
   filepath = os.path.join(data_path, filename + '.pk')
   print('Creating parquet file -> {}'.format(filepath))
   save_df(df, filepath)
+
+  if compression:
+    print('Compressing parquet file -> {}'.format(filepath + '.7z'))
+    compress_df(filepath)
 
 
 def process_df(df, plugins, verbose=True):
@@ -148,6 +152,7 @@ def load_multiple(name, sep, usecols, parse_dates, chunksize, plugins):
 def convert_df(params):
   df = None
   sep = ';'
+  compression = True
   usecols = None
   plugins = None
   chunksize = None
@@ -157,6 +162,8 @@ def convert_df(params):
 
   if 'sep' in params:
     sep = params['sep']
+  if 'compression' in params:
+    compression = params['compression']
   if 'usecols' in params:
     usecols = params['usecols']
   if 'chunksize' in params:
@@ -174,7 +181,7 @@ def convert_df(params):
   # Call after plugins
   df = load_tasks(df, plugins, 'after')
 
-  export_files(df, params['name'])
+  export_files(df, params['name'], compression)
 
 
 def main():

@@ -3,31 +3,35 @@
 # OS Support also exists for jessie & stretch (slim and full).
 # See https://hub.docker.com/r/library/python/ for all supported Python
 # tags from Docker Hub.
-FROM python:3.6-slim
+FROM python:3.7-slim
 
-LABEL Name=dataset-converter Version=0.0.1
+LABEL Name=dataset-converter Version=0.1.0
 LABEL maintainer="Hugo Matalonga <dev@hmatalonga.com>"
 
 ARG UID=1000
 ARG GID=1000
 
+RUN apt-get update \
+&& apt-get install -y --no-install-recommends p7zip-full \
+&& rm -rf /var/lib/apt/lists/*
+
 RUN addgroup --system --gid ${GID} user \
 && adduser --system --uid ${UID} --group user
 
-ENV PATH=${PATH}:/home/user/.local/bin
-
 WORKDIR /home/user
-ADD ./app /home/user
+COPY ./app/requirements.txt /home/user
 
 # Using pip:
-RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install -r requirements.txt
+RUN python3 -m pip install --upgrade --no-cache-dir --compile pip
+RUN python3 -m pip install --no-cache-dir --compile -r requirements.txt
 
 ADD ./entrypoint.sh /usr/local/bin
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
+COPY ./app/ /home/user/
 RUN chown -R user:user /home/user
 
 USER user
+ENV PATH=${PATH}:/home/user/.local/bin
 
-CMD ["entrypoint.sh"]
+CMD ["/usr/local/bin/entrypoint.sh"]

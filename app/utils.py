@@ -3,6 +3,9 @@ import numpy as np
 import pandas as pd
 import pyarrow.parquet as pq
 
+import subprocess
+from subprocess import Popen
+
 
 def typecast_ints(gl_int):
   if gl_int is not None:
@@ -61,3 +64,11 @@ def save_df(df, path, compression='snappy', use_dictionary=True):
                   use_dictionary=use_dictionary)
   except Exception as e:
     print(e)
+
+
+def compress_df(filepath):
+  p = Popen(['7z', 'a', '-t7z', '-sdel', '--', filepath + '.7z', filepath],
+            stdout=subprocess.PIPE, universal_newlines=True)
+  p.wait()
+  output,_ = p.communicate()
+  [print(s) for s in output.splitlines()]

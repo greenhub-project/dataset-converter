@@ -10,9 +10,8 @@ def apply(df):
   df = df.reset_index(drop=True)
 
   # explicitly cast battery level to integer
-  df_level = df.battery_level * 100
-  converted_level = df_level.astype(np.uint8)
-  df.loc[:, 'battery_level'] = converted_level
+  df.loc[:, 'battery_level'] = df.battery_level * 100
+  df.loc[:, 'battery_level'] = df.battery_level.astype(np.uint8)
 
   # filter out malformed records
   df = df[df.battery_level <= 100]

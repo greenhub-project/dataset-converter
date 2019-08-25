@@ -76,7 +76,7 @@ def export_files(df, name, compression):
   print('Creating dtypes file -> {}'.format(filepath))
   save_dtypes(cache_dtypes(df), filepath)
 
-  filepath = os.path.join(data_path, filename + '.pk')
+  filepath = os.path.join(data_path, filename + '.parquet')
   print('Creating parquet file -> {}'.format(filepath))
   save_df(df, filepath)
 

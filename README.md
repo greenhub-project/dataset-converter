@@ -59,6 +59,7 @@ Table filename. This argument is required.
 #### sep
 
 Type: `string`
+
 Default: `;`
 
 Delimiter character to use. This argument is optional.
@@ -66,6 +67,7 @@ Delimiter character to use. This argument is optional.
 #### compression
 
 Type: `boolean`
+
 Default: `true`
 
 Whether to compress the parquet files to `7z` format or not, when compression is on, it deletes the uncompressed parquet files afterwards. This argument is optional.

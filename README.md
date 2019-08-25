@@ -51,7 +51,7 @@ The application includes the following packages:
 
 Any extra dependencies can be added to the `requirements.txt` in the plugins folder, they will be installed on the startup of the application.
 
-A sample plugin is provided as a template to get you started.
+A sample plugin is provided as a template to get you started. A collection of addons (configs and plugins) can be found [here](https://github.com/greenhub-project/dataset-converter-addons).
 
 ## Configuration
 

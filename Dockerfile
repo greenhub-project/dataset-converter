@@ -5,7 +5,7 @@
 # tags from Docker Hub.
 FROM python:3.7-slim
 
-LABEL Name=dataset-converter Version=0.1.1
+LABEL Name=dataset-converter Version=0.2.0
 LABEL maintainer="Hugo Matalonga <dev@hmatalonga.com>"
 
 ARG UID=1000
@@ -32,4 +32,4 @@ RUN chown -R user:user /home/user
 USER user
 ENV PATH=${PATH}:/home/user/.local/bin
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["/usr/local/bin/entrypoint.sh"]

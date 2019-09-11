@@ -66,8 +66,8 @@ def save_df(df, path, compression='snappy', use_dictionary=True):
     print(e)
 
 
-def compress_df(filepath):
-  p = Popen(['7z', 'a', '-t7z', '-sdel', '--', filepath + '.7z', filepath],
+def compress_df(filepath, files):
+  p = Popen(['7z', 'a', '-t7z', '-sdel', '--', filepath, files],
             stdout=subprocess.PIPE, universal_newlines=True)
   p.wait()
   output,_ = p.communicate()

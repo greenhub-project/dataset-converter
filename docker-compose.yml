@@ -8,6 +8,13 @@ services:
       args:
         - UID=${UID}
         - GID=${GID}
+    environment:
+      - DATA_DIR=${DATA_DIR}
+      - CONFIG_DIR=${CONFIG_DIR}
+      - PLUGIN_DIR=${PLUGIN_DIR}
+      - OUTPUT_DIR=${OUTPUT_DIR}
     volumes:
-      - ./data:/home/user/data
-      - ./plugins:/home/user/plugins
+      - ${DATA_DIR}:/home/user/data
+      - ${CONFIG_DIR}:/home/user/config
+      - ${PLUGIN_DIR}:/home/user/plugins
+      - ${OUTPUT_DIR}:/home/user/output

@@ -85,6 +85,14 @@ Default: `true`
 
 Whether to compress the parquet files to `7z` format or not, when compression is on, it deletes the uncompressed parquet files afterwards. This argument is optional.
 
+#### partition
+
+Type: `boolean`
+
+Default: `false`
+
+Whether to export to separate files in chunks or to export to a single parquet file. This argument is optional.
+
 #### chunksize
 
 Type: `number`

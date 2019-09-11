@@ -2,4 +2,4 @@
 
 docker-compose down
 docker rmi dataset-converter:latest
-docker-compose up
+docker-compose up -d

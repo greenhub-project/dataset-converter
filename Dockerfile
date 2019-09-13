@@ -5,7 +5,7 @@
 # tags from Docker Hub.
 FROM python:3.7-slim
 
-LABEL Name=dataset-converter Version=0.2.0
+LABEL Name=dataset-converter Version=0.2.1
 LABEL maintainer="Hugo Matalonga <dev@hmatalonga.com>"
 
 ARG UID=1000

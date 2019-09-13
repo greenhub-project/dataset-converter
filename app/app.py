@@ -165,8 +165,12 @@ def load_multiple(options):
 
   if not options['partition']:
     print('Merging all processed chunks')
-    # concat the list into dataframe 
-    return pd.concat(chunk_list)
+    # concat the list into dataframe
+    df = None
+    while chunk_list:
+      df = pd.concat([df, chunk_list.pop(0)], ignore_index=True)
+
+    return df
 
 
 def convert_df(params):
